@@ -25,3 +25,19 @@ Visualized the distribution of waste categories using a pie chart.
 
 **5. Visualization:** <br>
 Generated a pie chart to display the class distribution of the dataset, ensuring balanced data representation for training.
+
+# Week-2 Progress:
+Key Updates & Improvements:
+
+**1. Built & Improved CNN Model:** <br>
+I added Batch Normalization after each convolutional block to improve stability and speed up training. Additionally, I used He Uniform Initialization to set better initial weights, preventing issues like vanishing gradients.
+
+**2. Optimized Feature Extraction & Regularization:** <br>
+The model's convolutional layers were enhanced by progressively increasing the number of filters (32 → 64 → 128 → 256) to capture both low-level and high-level image features. I also applied Dropout (0.5) in the fully connected layers to prevent overfitting and ensure the model generalizes well on new data.
+
+**3. Fixed Data Pipeline & Image Preprocessing:** <br>
+I implemented ImageDataGenerator to apply real-time image augmentation, including rotation, zoom, width & height shift, shear, and horizontal flipping. These transformations make the model more robust to variations in input images.
+
+**4. Added Early Stopping & Model Checkpoint:** <br>
+To prevent overfitting, I implemented EarlyStopping, which stops training if the validation loss does not improve for a set number of epochs.
+Additionally, I used ModelCheckpoint to automatically save the best-performing model during training, ensuring that I retain the most optimal version for further evaluation.

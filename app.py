@@ -3,23 +3,36 @@ import tensorflow as tf
 import numpy as np
 import cv2
 import os
+import gdown
 from PIL import Image
 
 # Streamlit Page Configuration
 st.set_page_config(page_title="Waste Classification using CNN", page_icon="♻️", layout="wide")
 
-# Function to Load Model (with Error Handling)
+# Google Drive Model File ID (Replace this with your actual Google Drive file ID)
+MODEL_URL = "https://drive.google.com/uc?id=YOUR_FILE_ID_HERE"
+MODEL_PATH = "best_model.h5"
+
+# Function to Download Model if Not Found
+def download_model():
+    if not os.path.exists(MODEL_PATH):
+        st.info("Downloading model... Please wait ⏳")
+        gdown.download(MODEL_URL, MODEL_PATH, quiet=False)
+
+# Download model if not present
+download_model()
+
+# Load Model with Caching
 @st.cache_resource
 def load_model():
-    model_path = "best_model.h5"  # Change this if your model is in another folder
-    if not os.path.exists(model_path):
-        st.error("❌ Model file not found! Please upload `waste_classification_model.h5` in the app directory.")
+    if not os.path.exists(MODEL_PATH):
+        st.error("❌ Model file not found! Please check the model link.")
         return None
-    return tf.keras.models.load_model(model_path)
+    return tf.keras.models.load_model(MODEL_PATH)
 
 model = load_model()
 
-# Define Class Labels (Modify Based on Your Dataset)
+# Define Class Labels
 CLASS_NAMES = ["Organic", "Recyclable"]
 
 # Sidebar - About Section
@@ -46,9 +59,6 @@ st.markdown("<h1 style='text-align: center;'>♻️ Waste Classification using C
 st.subheader("📤 Upload an image for classification")
 uploaded_file = st.file_uploader("Drag and drop file here", type=["jpg", "jpeg", "png"])
 
-# Image URL Input
-image_url = st.text_input("🔗 Or enter an Image URL for Classification:")
-
 # Function to Process and Classify Image
 def classify_image(image):
     img = np.array(image)
@@ -69,7 +79,6 @@ def classify_image(image):
 if uploaded_file is not None:
     image = Image.open(uploaded_file)
     st.image(image, caption="Uploaded Image", use_container_width=True)
-
 
     predicted_class, confidence = classify_image(image)
     

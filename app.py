@@ -10,7 +10,7 @@ from PIL import Image
 st.set_page_config(page_title="Waste Classification using CNN", page_icon="♻️", layout="wide")
 
 # Google Drive Model File ID (Replace this with your actual Google Drive file ID)
-MODEL_URL = "https://drive.google.com/uc?id=YOUR_FILE_ID_HERE"
+MODEL_URL = "https://drive.google.com/file/d/1CtBukWIT4arnYbAMmRsMBJK39JiXPArN/view?usp=sharing"
 MODEL_PATH = "best_model.h5"
 
 # Function to Download Model if Not Found
